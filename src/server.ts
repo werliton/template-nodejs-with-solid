@@ -1,19 +1,19 @@
-import express, { Router, json } from 'express'
+import express, { json } from 'express';
+import routes from './routes';
 
-const app = express()
+const app = express();
 
-app.use(json())
+app.use(json());
 
 app.post('/user', (request, response) => {
-    const { name, email } = request.body
+  const { name, email } = request.body;
 
-    return response.json({
-        name,
-        email
-    })
-})
-
+  return response.json({
+    name,
+    email,
+  });
+});
 
 app.listen(3333, () => {
-    console.log('Server listen in port 3333');
-})
+  console.log('Server listen in port 3333');
+});
