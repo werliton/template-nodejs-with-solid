@@ -1,10 +1,15 @@
-import express from 'express'
+import express, { Router, json } from 'express'
 
 const app = express()
 
-app.get('/', (request, response) => {
+app.use(json())
+
+app.post('/user', (request, response) => {
+    const { name, email } = request.body
+
     return response.json({
-        message: 'Ola'
+        name,
+        email
     })
 })
 
