@@ -1,21 +1,18 @@
 import {
   Router,
 } from 'express';
-import { startOfHour, parseISO, isEqual } from 'date-fns';
-import Appointment from '../models/Appointment';
+import { startOfHour, parseISO } from 'date-fns';
+import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 const appointmentsRouter = Router();
-
-type Appointments = Array<Appointment>
-
-const appointments: Appointments = [];
+const appointmentRepository = new AppointmentsRepository();
 
 appointmentsRouter.post('/', (request, response) => {
   const { provider, data } = request.body;
 
   const parseDate = startOfHour(parseISO(data));
 
-  const findAppointmentInSameDate = appointments.find((item) => isEqual(parseDate, item.data));
+  const findAppointmentInSameDate = appointmentRepository.findByDate(parseDate);
 
   if (findAppointmentInSameDate) {
     return response.status(400).json({
@@ -23,15 +20,11 @@ appointmentsRouter.post('/', (request, response) => {
     });
   }
 
-  const appointment = new Appointment(provider, parseDate);
+  const appointment = appointmentRepository.create(provider, parseDate);
 
-  appointments.push(appointment);
-
-  return response.status(201).json({
-    message: 'Cadastrado com sucesso',
-  });
+  return response.status(201).json(appointment);
 });
 
-appointmentsRouter.get('/', (request, response) => response.json(appointments));
+appointmentsRouter.get('/', (request, response) => response.json(appointmentRepository.list()));
 
 export default appointmentsRouter;
