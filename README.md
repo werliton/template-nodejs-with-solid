@@ -1,4 +1,11 @@
-# Comando iniciais
+# Template API Nodejs with SOLID
+
+
+## O que temos:
+- Configuração com eslint, editorconfig
+- Configuração com Debug
+
+## Comando iniciais
 
 ```
 yarn add

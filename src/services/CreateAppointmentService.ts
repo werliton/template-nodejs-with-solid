@@ -11,6 +11,7 @@ interface Response{
  */
 
 // Dependece Inversion
+// DRY (Don't Repeat Yourself)
 
 class CreateAppointmentService {
     private appointmentRepository: AppointmentsRepository
