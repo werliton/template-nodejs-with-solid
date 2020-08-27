@@ -1,29 +1,33 @@
 import {
   Router,
 } from 'express';
-import { startOfHour, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import CreateAppointmentService from '../services/CreateAppointmentService';
 
 const appointmentsRouter = Router();
 const appointmentRepository = new AppointmentsRepository();
 
 // SoC: Separation of Concerns (Separacao de preocupacao)
 appointmentsRouter.post('/', (request, response) => {
-  const { provider, data } = request.body;
+  try {
+    const { provider, data } = request.body;
 
-  const parseDate = startOfHour(parseISO(data));
+    const parseDate = parseISO(data);
 
-  const findAppointmentInSameDate = appointmentRepository.findByDate(parseDate);
+    const createAppointment = new CreateAppointmentService(appointmentRepository);
 
-  if (findAppointmentInSameDate) {
+    const appointment = createAppointment.execute({
+      date: parseDate,
+      provider,
+    });
+
+    return response.status(201).json(appointment);
+  } catch (err) {
     return response.status(400).json({
-      message: 'This appointment is already booked',
+      error: err.message,
     });
   }
-
-  const appointment = appointmentRepository.create({ provider, date: parseDate });
-
-  return response.status(201).json(appointment);
 });
 
 appointmentsRouter.get('/', (request, response) => response.json(appointmentRepository.all()));
