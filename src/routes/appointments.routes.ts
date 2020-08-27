@@ -7,6 +7,7 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository';
 const appointmentsRouter = Router();
 const appointmentRepository = new AppointmentsRepository();
 
+// SoC: Separation of Concerns (Separacao de preocupacao)
 appointmentsRouter.post('/', (request, response) => {
   const { provider, data } = request.body;
 
@@ -20,11 +21,11 @@ appointmentsRouter.post('/', (request, response) => {
     });
   }
 
-  const appointment = appointmentRepository.create(provider, parseDate);
+  const appointment = appointmentRepository.create({ provider, date: parseDate });
 
   return response.status(201).json(appointment);
 });
 
-appointmentsRouter.get('/', (request, response) => response.json(appointmentRepository.list()));
+appointmentsRouter.get('/', (request, response) => response.json(appointmentRepository.all()));
 
 export default appointmentsRouter;
