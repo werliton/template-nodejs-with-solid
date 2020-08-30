@@ -1,12 +1,4 @@
-import express, { json } from 'express';
-import routes from './routes';
-
-import './database';
-
-const app = express();
-
-app.use(json());
-app.use(routes);
+import app from './app';
 
 // eslint-disable-next-line no-console
 app.listen(3333, () => console.log('Servidor ouvindo na porta 333'));
