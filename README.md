@@ -15,6 +15,16 @@ yarn add
     - date-fns
 yarn tsc --init
 
+> Realizar uma migracao:
+- yarn typeorm migration:run
+
+
+> Criando uma migracao:
+- yarn typeorm migration:create -n nomedamigration
+
+> Revertendo uma migracao:
+- yarn typeorm migration:revert (Reverte a última migration realizada)
+
 ```
 
 ## Estrutura do projeto
@@ -28,6 +38,22 @@ yarn tsc --init
     - database/ (Contem toda a configuracao com a base de dados Postgres)
         - migrations/ (Contem todas as migrations da base)
 
+## Como rodar o projeto
+
+### 1º Passo
+
+Deve deixar a base de dados no Postgres disponível. Para isso, temos duas opções:
+
+1- Disponibilizar um container no docker rodando o comando:
+
+```
+docker run --name gostack-postgres -e POSTGRES_PASSWORD=123456 -p 5434:5432 -d postgres
+```
+2- Executar via `docker-compose`:
+
+```
+docker-compose up -d --build
+```
 ## Stack
 
 - Nodejs

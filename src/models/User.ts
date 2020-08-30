@@ -1,17 +1,20 @@
 import {
-  Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn,
+  Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('appointments')
-class Appointment {
+@Entity('users')
+export default class User {
     @PrimaryGeneratedColumn('uuid')
     id: string
 
     @Column()
-    provider: string
+    name: string
 
-    @Column('timestamp with time zone')
-    date: Date
+    @Column()
+    email: string
+
+    @Column()
+    senha: string
 
     @CreateDateColumn()
     // eslint-disable-next-line camelcase
@@ -21,5 +24,3 @@ class Appointment {
     // eslint-disable-next-line camelcase
     updated_at: Date
 }
-
-export default Appointment;
