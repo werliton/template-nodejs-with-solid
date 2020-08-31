@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable class-methods-use-this */
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
@@ -5,7 +6,7 @@ import Appointment from '../models/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 interface Response{
-    provider: string
+    provider_id: string
     date: Date
 }
 /**
@@ -16,7 +17,7 @@ interface Response{
 // DRY (Don't Repeat Yourself)
 
 class CreateAppointmentService {
-  public async execute({ date, provider }: Response): Promise<Appointment> {
+  public async execute({ date, provider_id }: Response): Promise<Appointment> {
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
     const appointmentDate = startOfHour(date);
 
@@ -26,7 +27,7 @@ class CreateAppointmentService {
       throw Error('This appointment is already booked');
     }
 
-    const appointment = appointmentsRepository.create({ provider, date: appointmentDate });
+    const appointment = appointmentsRepository.create({ provider_id, date: appointmentDate });
 
     await appointmentsRepository.save(appointment);
 

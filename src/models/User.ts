@@ -14,7 +14,7 @@ export default class User {
     email: string
 
     @Column()
-    senha: string
+    password: string
 
     @CreateDateColumn()
     // eslint-disable-next-line camelcase
