@@ -12,7 +12,7 @@ export default class CreateUserService {
   async execute({ email, name, password }: Request): Promise<User> {
     const usersRepository = getRepository(User);
 
-    const checkUserExists = usersRepository.findOne({
+    const checkUserExists = await usersRepository.findOne({
       where: {
         email,
       },
@@ -32,9 +32,9 @@ export default class CreateUserService {
       },
     );
 
-    delete user.password;
-
     await usersRepository.save(user);
+
+    delete user.password;
 
     return user;
   }
