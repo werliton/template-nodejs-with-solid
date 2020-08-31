@@ -1,14 +1,14 @@
 import { getRepository } from 'typeorm';
 import User from '../models/User';
 
-interface Response{
+interface Request{
     name: string
     email: string
     password: string
 }
 
 export default class CreateUserService {
-  async execute({ email, name, password }: Response): Promise<User> {
+  async execute({ email, name, password }: Request): Promise<User> {
     const usersRepository = getRepository(User);
 
     const checkUserExists = usersRepository.findOne({

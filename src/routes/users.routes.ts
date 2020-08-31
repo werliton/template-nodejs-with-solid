@@ -12,7 +12,7 @@ usersRouter.post('/', async (request, response) => {
 
     const createUser = new CreateUserService();
 
-    const user = createUser.execute({
+    const user = await createUser.execute({
       email, name, password,
     });
 
