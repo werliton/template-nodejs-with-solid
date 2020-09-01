@@ -13,24 +13,18 @@ const appointmentsRouter = Router();
 appointmentsRouter.use(ensureAuthenticated);
 // SoC: Separation of Concerns (Separacao de preocupacao)
 appointmentsRouter.post('/', async (request, response) => {
-  try {
-    const { provider_id, date } = request.body;
+  const { provider_id, date } = request.body;
 
-    const parseDate = parseISO(date);
+  const parseDate = parseISO(date);
 
-    const createAppointment = new CreateAppointmentService();
+  const createAppointment = new CreateAppointmentService();
 
-    const appointment = await createAppointment.execute({
-      date: parseDate,
-      provider_id,
-    });
+  const appointment = await createAppointment.execute({
+    date: parseDate,
+    provider_id,
+  });
 
-    return response.status(201).json(appointment);
-  } catch (err) {
-    return response.status(400).json({
-      error: err.message,
-    });
-  }
+  return response.status(201).json(appointment);
 });
 
 appointmentsRouter.get('/', async (request, response) => {

@@ -7,21 +7,15 @@ const usersRouter = Router();
 
 // SoC: Separation of Concerns (Separacao de preocupacao)
 usersRouter.post('/', async (request, response) => {
-  try {
-    const { name, email, password } = request.body;
+  const { name, email, password } = request.body;
 
-    const createUser = new CreateUserService();
+  const createUser = new CreateUserService();
 
-    const user = await createUser.execute({
-      email, name, password,
-    });
+  const user = await createUser.execute({
+    email, name, password,
+  });
 
-    return response.status(201).json(user);
-  } catch (err) {
-    return response.status(err.statusCode).json({
-      error: err.message,
-    });
-  }
+  return response.status(201).json(user);
 });
 
 export default usersRouter;
