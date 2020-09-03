@@ -1,7 +1,6 @@
 import {
   Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn,
 } from 'typeorm';
-import { query } from 'express';
 import User from './User';
 
 @Entity('appointments')

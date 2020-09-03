@@ -2,6 +2,7 @@ import express, {
   json, Request, Response, NextFunction,
 } from 'express';
 import 'express-async-errors';
+import uploadConfig from './config/upload';
 
 import routes from './routes';
 import 'reflect-metadata';
@@ -12,6 +13,7 @@ import AppError from './errors/AppError';
 const app = express();
 
 app.use(json());
+app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
