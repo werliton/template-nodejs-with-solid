@@ -29,6 +29,7 @@
           ],
           "no-underscore-dangle":"off",
           "class-methods-use-this":"off",
+          "no-useless-constructor": "off",
         //   "@typescript-eslint/interface-name-prefix": [
         //       "error",
         //       {
