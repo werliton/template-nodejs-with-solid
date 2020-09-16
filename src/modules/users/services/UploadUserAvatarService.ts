@@ -1,10 +1,10 @@
-import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 
 import uploadConfig from '@config/upload';
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface Request{
     // eslint-disable-next-line camelcase
@@ -12,12 +12,12 @@ interface Request{
     avatarFilename: string
 }
 class UpdateUserAvatarService {
+  constructor(private usersRepository: IUsersRepository) {}
+
   // eslint-disable-next-line camelcase
   async execute({ user_id, avatarFilename }: Request): Promise<User> {
-    const usersRepository = getRepository(User);
-
     // Verificar se o id do usuário eh um id valido
-    const user = await usersRepository.findOne(user_id);
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('Invalid User');
@@ -34,7 +34,7 @@ class UpdateUserAvatarService {
 
     user.avatar = avatarFilename;
 
-    await usersRepository.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }
