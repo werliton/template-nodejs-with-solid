@@ -4,6 +4,7 @@ import fs from 'fs';
 import uploadConfig from '@config/upload';
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
+import { injectable, inject } from 'tsyringe';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface Request{
@@ -11,8 +12,12 @@ interface Request{
     user_id: string
     avatarFilename: string
 }
+@injectable()
 class UpdateUserAvatarService {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
 
   // eslint-disable-next-line camelcase
   async execute({ user_id, avatarFilename }: Request): Promise<User> {

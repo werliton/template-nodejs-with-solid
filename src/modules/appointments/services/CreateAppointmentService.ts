@@ -3,6 +3,7 @@
 import { startOfHour } from 'date-fns';
 import AppError from '@shared/errors/AppError';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import { injectable, inject } from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface Request{
@@ -15,9 +16,12 @@ interface Request{
 
 // Dependece Inversion
 // DRY (Don't Repeat Yourself)
-
+@injectable()
 class CreateAppointmentService {
-  constructor(private appointmentsRepository:IAppointmentsRepository) {}
+  constructor(
+    @inject('AppointmentsRepository')
+    private appointmentsRepository:IAppointmentsRepository,
+  ) {}
 
   public async execute({ date, provider_id }: Request): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
