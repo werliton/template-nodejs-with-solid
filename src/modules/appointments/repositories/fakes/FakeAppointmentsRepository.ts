@@ -2,6 +2,7 @@
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import { uuid } from 'uuidv4';
+import { isEqual } from 'date-fns';
 import IAppointmentsRepository from '../IAppointmentsRepository';
 
 // Usando o L do SOLID
@@ -28,7 +29,7 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
      * findByDate
 date: Date : Appointment | null    */
     public async findByDate(date: Date): Promise<Appointment | undefined> {
-      const findAppointment = this.appoitments.find((appointment) => appointment.date === date);
+      const findAppointment = this.appoitments.find((appointment) => isEqual(appointment.date, date));
       return findAppointment;
     }
 }

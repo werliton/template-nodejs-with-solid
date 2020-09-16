@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
@@ -14,9 +15,19 @@ describe('CreateAppointment', () => {
     expect(appointment).toHaveProperty('id');
   });
 
-  it('should not be able to create a two appointments on the same time', () => {
-    const data = {
+  it('should not be able to create a two appointments on the same time', async () => {
+    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    const createAppointment = new CreateAppointmentService(fakeAppointmentsRepository);
 
-    };
+    const data = new Date();
+    await createAppointment.execute({
+      date: data,
+      provider_id: '252514',
+    });
+
+    expect(createAppointment.execute({
+      date: data,
+      provider_id: '252514',
+    })).rejects.toBeInstanceOf(AppError);
   });
 });
