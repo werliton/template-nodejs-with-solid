@@ -30,18 +30,20 @@
           "no-underscore-dangle":"off",
           "class-methods-use-this":"off",
           "no-useless-constructor": "off",
-        //   "@typescript-eslint/interface-name-prefix": [
-        //       "error",
-        //       {
-        //           "prefixWithI": "always"
-        //         }
-        //     ],
+          "no-extra-semi": "off",
+          "@typescript-eslint/no-extra-semi": ["error"],
           "@typescript-eslint/camelcase":"off",
           "@typescript-eslint/no-unused-vars":[
               "error", {
                   "argsIgorePattern":"_"
               }
           ]
+          //   "@typescript-eslint/interface-name-prefix": [
+          //       "error",
+          //       {
+          //           "prefixWithI": "always"
+          //         }
+          //     ],
     },
     "settings": {
         "import/resolver": {
